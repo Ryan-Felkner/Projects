@@ -1,0 +1,20 @@
+title {
+	color:grey;
+}
+
+body {
+	font-family:Arial, sans-serif;
+	background-color:lightgrey;
+
+nav {
+  background-color: #232023;
+  padding: 10px 0 10px;
+}
+
+header {
+	padding: 100px;
+	margin-left:150px;
+  background-image: url(Griffin-Elite-2015-5-1030x579.jpg.webp);
+  background-repeat: repeat-y;
+  color: white;
+}
