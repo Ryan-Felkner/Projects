@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DueDay — Student Planner</title>
+<style>
+:root{--ink:#202b3c;--muted:#778397;--line:#e8ecf2;--paper:#fff;--bg:#f5f7fb;--purple:#6658d3;--purple-light:#efedff;--teal:#168b83;--orange:#d98235;--red:#c94b61;--shadow:0 12px 35px rgba(37,49,75,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh;max-width:1600px;margin:auto}
+.sidebar{background:#fff;border-right:1px solid var(--line);padding:28px 18px;display:flex;flex-direction:column;gap:28px}.brand{display:flex;align-items:center;gap:10px;padding:0 9px;font-weight:800;font-size:21px;letter-spacing:-.7px}.logo{display:grid;place-items:center;background:var(--purple);color:#fff;width:35px;height:35px;border-radius:12px;font-size:19px}.side-label{font-size:10px;letter-spacing:1.6px;color:#a0a9b8;font-weight:800;margin:0 10px 8px}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:#69758a;text-align:left;padding:11px 12px;border-radius:10px;display:flex;align-items:center;gap:12px}.nav button.active,.nav button:hover{background:var(--purple-light);color:var(--purple);font-weight:700}.nav .symbol{width:20px;text-align:center;font-size:17px}.side-bottom{margin-top:auto;background:#f7f6ff;border-radius:16px;padding:16px}.side-bottom strong{display:block;margin-bottom:5px}.side-bottom p{font-size:12px;color:var(--muted);margin:0 0 12px}.small-btn{border:0;background:#fff;color:var(--purple);font-weight:700;padding:8px 10px;border-radius:8px;font-size:12px}
+main{padding:30px clamp(18px,3vw,44px);min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:28px}.eyebrow{font-size:12px;color:var(--muted);margin-bottom:4px}.heading{font-size:29px;line-height:1.15;letter-spacing:-1px;margin:0;font-weight:800}.top-actions{display:flex;align-items:center;gap:10px}.today-btn,.add-btn,.icon-btn{border:1px solid var(--line);background:#fff;padding:10px 14px;border-radius:10px;font-weight:650;color:var(--ink)}.add-btn{background:var(--purple);color:#fff;border-color:var(--purple);box-shadow:0 5px 12px #6658d32b}.avatar{width:38px;height:38px;border-radius:50%;background:#e7e4ff;color:var(--purple);display:grid;place-items:center;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:24px}.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 19px;box-shadow:var(--shadow)}.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;font-weight:650}.stat-icon{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:#efedff;color:var(--purple)}.stat-number{font-size:29px;font-weight:800;letter-spacing:-1px;margin-top:10px}.stat-note{font-size:11px;color:var(--muted);margin-top:2px}.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.85fr);gap:20px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow);overflow:hidden}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:20px 21px 15px}.panel-title{font-size:16px;font-weight:800;margin:0}.panel-sub{font-size:12px;color:var(--muted);margin-top:3px}.month-control{display:flex;align-items:center;gap:12px;font-weight:750;font-size:13px}.month-control button{border:1px solid var(--line);background:#fff;border-radius:8px;width:29px;height:29px;color:#647087}.weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:0 13px}.weekdays div{text-align:center;color:#9aa4b4;font-size:10px;font-weight:800;padding:9px 0}.day{min-height:78px;border-top:1px solid #f0f2f6;border-right:1px solid #f0f2f6;padding:7px 5px;cursor:pointer;transition:background .15s}.day:nth-child(7n){border-right:0}.day:hover{background:#faf9ff}.day.outside{color:#c4cad4;background:#fcfcfd}.day.selected{background:#f2f0ff;box-shadow:inset 0 0 0 1px #c9c3ff}.day-num{font-size:11px;font-weight:700;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;margin-bottom:4px}.day.today .day-num{background:var(--purple);color:white}.event{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-radius:4px;padding:3px 4px;font-size:9px;font-weight:750;margin-top:3px}.event.homework{background:#e9f5ff;color:#3378a9}.event.exam{background:#fff0e7;color:#b96b30}.event.project{background:#e7f7f1;color:#22836b}.calendar-footer{padding:12px 20px;border-top:1px solid var(--line);display:flex;gap:15px;flex-wrap:wrap;color:var(--muted);font-size:11px}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}.right-stack{display:grid;gap:20px}.task-list{padding:0 18px 12px}.task{display:flex;gap:11px;padding:13px 2px;border-bottom:1px solid #f0f2f6;align-items:flex-start}.task:last-child{border-bottom:0}.check{width:18px;height:18px;flex-shrink:0;border:1.5px solid #cbd2df;border-radius:6px;background:#fff;margin-top:2px;display:grid;place-items:center;color:#fff;font-size:11px}.check.done{background:var(--teal);border-color:var(--teal)}.task-body{min-width:0;flex:1}.task-title{font-size:13px;font-weight:750;overflow-wrap:anywhere}.task.done .task-title{text-decoration:line-through;color:#9ba4b2}.task-meta{font-size:11px;color:var(--muted);margin-top:3px}.tag{font-size:9px;font-weight:800;padding:4px 7px;border-radius:6px;white-space:nowrap}.tag.exam{color:#b96b30;background:#fff0e7}.tag.homework{color:#3378a9;background:#e9f5ff}.tag.project{color:#22836b;background:#e7f7f1}.due{font-size:11px;color:var(--red);font-weight:750;margin-top:5px}.empty{color:var(--muted);font-size:13px;padding:18px 5px}.reminder-box{margin:0 18px 18px;background:#f7f6ff;border-radius:12px;padding:13px;display:flex;gap:10px;align-items:flex-start}.reminder-box .bell{font-size:18px}.reminder-box strong{font-size:12px;display:block}.reminder-box p{font-size:11px;color:var(--muted);margin:3px 0 8px}.reminder-box button{border:0;background:transparent;color:var(--purple);padding:0;font-size:11px;font-weight:800}.section-row{display:flex;justify-content:space-between;align-items:center;padding:20px 21px 12px}.text-btn{background:none;border:0;color:var(--purple);font-size:12px;font-weight:800}.empty-state{padding:22px;text-align:center;color:var(--muted);font-size:13px}
+.modal-backdrop{position:fixed;inset:0;background:#18203470;display:none;align-items:center;justify-content:center;padding:18px;z-index:5}.modal-backdrop.open{display:flex}.modal{width:min(460px,100%);background:#fff;border-radius:18px;padding:24px;box-shadow:0 25px 80px #0003}.modal h2{margin:0 0 4px;font-size:21px;letter-spacing:-.5px}.modal .intro{font-size:12px;color:var(--muted);margin:0 0 20px}.field{display:grid;gap:6px;margin-bottom:14px}.field label{font-size:12px;font-weight:750;color:#4e5a6e}.field input,.field select{width:100%;padding:11px 12px;border:1px solid #dfe4ed;border-radius:9px;background:white;color:var(--ink);outline:none}.field input:focus,.field select:focus{border-color:var(--purple);box-shadow:0 0 0 3px #6658d31a}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}.cancel{border:1px solid var(--line);background:#fff;border-radius:9px;padding:10px 14px}.save{border:0;background:var(--purple);color:#fff;border-radius:9px;padding:10px 16px;font-weight:750}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#202b3c;color:#fff;border-radius:10px;padding:11px 16px;font-size:13px;box-shadow:var(--shadow);display:none;z-index:10}.toast.show{display:block}
+@media(max-width:1050px){.app{grid-template-columns:190px 1fr}.layout{grid-template-columns:1fr}.right-stack{grid-template-columns:1fr 1fr}.day{min-height:68px}}
+@media(max-width:720px){.app{display:block}.sidebar{display:none}main{padding:22px 14px}.topbar{align-items:flex-start}.heading{font-size:24px}.top-actions{gap:6px}.today-btn{display:none}.stats{gap:8px}.stat{padding:13px 12px}.stat-number{font-size:24px}.stat-note{font-size:10px}.stat-top{font-size:10px}.layout{grid-template-columns:1fr}.right-stack{grid-template-columns:1fr}.panel-head{padding:16px 14px 12px}.weekdays,.calendar-grid{padding:0 5px}.day{min-height:61px;padding:4px 2px}.day-num{width:21px;height:21px}.event{font-size:8px;padding:2px}.month-control{gap:6px;font-size:12px}.calendar-footer{padding:10px 14px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><span class="logo">✓</span> DueDay</div>
+  <div><div class="side-label">WORKSPACE</div><nav class="nav">
+    <button class="active" data-view="calendar"><span class="symbol">▦</span> Calendar</button>
+    <button data-view="upcoming"><span class="symbol">☷</span> Upcoming work</button>
+    <button data-view="exams"><span class="symbol">✎</span> Exams & projects</button>
+  </nav></div>
+  <div><div class="side-label">PREFERENCES</div><nav class="nav">
+    <button id="enableReminders"><span class="symbol">♧</span> Reminders</button>
+  </nav></div>
+  <div class="side-bottom"><strong>One step at a time ✨</strong><p>Keep your deadlines in one place and make your week feel more manageable.</p><button class="small-btn" id="quickAdd">+ Add an assignment</button></div>
+</aside>
+<main>
+  <header class="topbar">
+    <div><div class="eyebrow" id="todayLabel">YOUR STUDENT PLANNER</div><h1 class="heading" id="greeting">Your semester, organized.</h1></div>
+    <div class="top-actions"><button class="today-btn" id="goToday">Today</button><button class="add-btn" id="addTop">＋ Add deadline</button><div class="avatar">S</div></div>
+  </header>
+  <section class="stats">
+    <div class="stat"><div class="stat-top">Upcoming deadlines <span class="stat-icon">◷</span></div><div class="stat-number" id="upcomingCount">0</div><div class="stat-note">Due in the next 7 days</div></div>
+    <div class="stat"><div class="stat-top">Exams & projects <span class="stat-icon" style="background:#fff0e7;color:#b96b30">✎</span></div><div class="stat-number" id="examCount">0</div><div class="stat-note">Coming up on your schedule</div></div>
+    <div class="stat"><div class="stat-top">Completed <span class="stat-icon" style="background:#e7f7f1;color:#22836b">✓</span></div><div class="stat-number" id="completedCount">0</div><div class="stat-note">Tasks checked off</div></div>
+  </section>
+  <div class="layout">
+    <section class="panel" id="calendarPanel">
+      <div class="panel-head"><div><h2 class="panel-title">Deadline calendar</h2><div class="panel-sub">Select a day to see what’s due.</div></div><div class="month-control"><button id="prevMonth" aria-label="Previous month">‹</button><span id="monthLabel">Month Year</span><button id="nextMonth" aria-label="Next month">›</button></div></div>
+      <div class="weekdays"><div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div></div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+      <div class="calendar-footer"><span><i class="dot" style="background:#60a5fa"></i>Homework</span><span><i class="dot" style="background:#ed9a5c"></i>Exam</span><span><i class="dot" style="background:#50b99b"></i>Project</span></div>
+    </section>
+    <div class="right-stack">
+      <section class="panel"><div class="panel-head"><div><h2 class="panel-title" id="dayTitle">Coming up</h2><div class="panel-sub" id="daySubtitle">Your next deadlines</div></div><button class="text-btn" id="viewAll">View all</button></div><div class="task-list" id="dayTasks"></div><div class="reminder-box"><span class="bell">🔔</span><div><strong>Friendly reminders</strong><p>Get browser notifications for deadlines. Keep this planner open for in-page reminders.</p><button id="notifyBtn">Enable notifications →</button></div></div></section>
+      <section class="panel"><div class="section-row"><div><h2 class="panel-title">All assignments</h2><div class="panel-sub">Everything you’re tracking</div></div><button class="text-btn" id="sortToggle">Due soonest</button></div><div class="task-list" id="allTasks"></div></section>
+    </div>
+  </div>
+</main>
+</div>
+<div class="modal-backdrop" id="modalBackdrop"><form class="modal" id="deadlineForm">
+  <h2>Add a deadline</h2><p class="intro">Put it on your calendar so it doesn’t sneak up on you.</p>
+  <div class="field"><label for="title">Assignment or exam name</label><input id="title" name="title" placeholder="e.g. Biology Chapter 4 quiz" required maxlength="100"></div>
+  <div class="two"><div class="field"><label for="course">Course</label><input id="course" name="course" placeholder="e.g. Biology" maxlength="50"></div><div class="field"><label for="type">Type</label><select id="type" name="type"><option value="homework">Homework</option><option value="exam">Exam</option><option value="project">Project</option></select></div></div>
+  <div class="two"><div class="field"><label for="date">Due date</label><input id="date" name="date" type="date" required></div><div class="field"><label for="time">Due time</label><input id="time" name="time" type="time" value="23:59"></div></div>
+  <div class="field"><label for="remind">Reminder</label><select id="remind" name="remind"><option value="1440">1 day before</option><option value="60" selected>1 hour before</option><option value="30">30 minutes before</option><option value="0">At the deadline</option><option value="-1">No reminder</option></select></div>
+  <div class="modal-actions"><button type="button" class="cancel" id="cancelModal">Cancel</button><button class="save" type="submit">Save deadline</button></div>
+</form></div>
+<div class="toast" id="toast"></div>
+<script>
+const $=s=>document.querySelector(s);
+const today=new Date();today.setHours(0,0,0,0);
+let shown=new Date(today.getFullYear(),today.getMonth(),1), selected=key(today), view='calendar', sortSoon=true;
+const sample=[
+ {id:1,title:'Read Chapter 6 + notes',course:'Philosophy',type:'homework',date:offset(1),time:'23:59',remind:60,done:false},
+ {id:2,title:'Physics problem set',course:'Physics',type:'homework',date:offset(2),time:'17:00',remind:1440,done:false},
+ {id:3,title:'Midterm exam',course:'Media & Politics',type:'exam',date:offset(4),time:'10:00',remind:1440,done:false},
+ {id:4,title:'Website prototype draft',course:'Digital Design',type:'project',date:offset(6),time:'23:59',remind:60,done:false},
+ {id:5,title:'Logic practice questions',course:'Philosophy',type:'homework',date:offset(-1),time:'23:59',remind:60,done:true}
+];
+function offset(n){let d=new Date(today);d.setDate(d.getDate()+n);return key(d)}
+function key(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function localDate(k){let [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d)}
+function load(){try{return JSON.parse(localStorage.getItem('dueday-items'))||sample}catch{return sample}}
+let items=load();
+function persist(){localStorage.setItem('dueday-items',JSON.stringify(items))}
+function fmt(k,opts={month:'short',day:'numeric'}){return localDate(k).toLocaleDateString(undefined,opts)}
+function dueDate(item){return new Date(`${item.date}T${item.time||'23:59'}:00`)}
+function toast(msg){let t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+function sorted(list){return [...list].sort((a,b)=>sortSoon?dueDate(a)-dueDate(b):dueDate(b)-dueDate(a))}
+function typeLabel(t){return t==='exam'?'Exam':t==='project'?'Project':'Homework'}
+function taskHTML(item){let late=!item.done&&dueDate(item)<new Date();return `<div class="task ${item.done?'done':''}"><button class="check ${item.done?'done':''}" data-check="${item.id}" aria-label="Mark ${esc(item.title)} complete">${item.done?'✓':''}</button><div class="task-body"><div class="task-title">${esc(item.title)}</div><div class="task-meta">${esc(item.course||'No course')} · ${fmt(item.date)} · ${item.time||'11:59 PM'}</div><div class="due" style="color:${late?'var(--red)':'var(--muted)'}">${late?'Past due':item.date===key(today)?'Due today':`Due ${fmt(item.date,{weekday:'short',month:'short',day:'numeric'})}`}</div></div><span class="tag ${item.type}">${typeLabel(item.type)}</span></div>`}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderCalendar(){
+ $('#monthLabel').textContent=shown.toLocaleDateString(undefined,{month:'long',year:'numeric'});
+ const start=new Date(shown.getFullYear(),shown.getMonth(),1);start.setDate(start.getDate()-start.getDay());
+ let out='';
+ for(let i=0;i<42;i++){let d=new Date(start);d.setDate(start.getDate()+i);let k=key(d),dayItems=sorted(items.filter(x=>x.date===k));out+=`<div class="day ${d.getMonth()!==shown.getMonth()?'outside':''} ${k===key(today)?'today':''} ${k===selected?'selected':''}" data-day="${k}"><div class="day-num">${d.getDate()}</div>${dayItems.slice(0,2).map(x=>`<span class="event ${x.type}" title="${esc(x.title)}">${esc(x.title)}</span>`).join('')}${dayItems.length>2?`<span style="font-size:9px;color:#7d8797">+${dayItems.length-2} more</span>`:''}</div>`}
+ $('#calendarGrid').innerHTML=out;
+}
+function renderTasks(){
+ let active=items.filter(x=>!x.done),next7=active.filter(x=>{let delta=(localDate(x.date)-today)/86400000;return delta>=0&&delta<7});
+ $('#upcomingCount').textContent=next7.length;$('#examCount').textContent=active.filter(x=>x.type==='exam'||x.type==='project').length;$('#completedCount').textContent=items.filter(x=>x.done).length;
+ let dayItems=sorted(items.filter(x=>x.date===selected));
+ if(view==='upcoming')dayItems=sorted(active.filter(x=>dueDate(x)>=new Date())).slice(0,6);
+ if(view==='exams')dayItems=sorted(active.filter(x=>x.type==='exam'||x.type==='project'));
+ $('#dayTitle').textContent=view==='upcoming'?'Upcoming work':view==='exams'?'Exams & projects':selected===key(today)?'Today’s deadlines':`Deadlines · ${fmt(selected,{month:'short',day:'numeric'})}`;
+ $('#daySubtitle').textContent=view==='upcoming'?'Your next due dates':view==='exams'?'Big dates to prepare for':'Select another day on the calendar';
+ $('#dayTasks').innerHTML=dayItems.length?dayItems.map(taskHTML).join(''):'<div class="empty">Nothing due here. Enjoy the breathing room! ✨</div>';
+ let all=sorted(items);$('#allTasks').innerHTML=all.length?all.map(taskHTML).join(''):'<div class="empty">No deadlines yet. Add your first one above.</div>';
+}
+function render(){renderCalendar();renderTasks();document.querySelectorAll('.nav button[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view))}
+function openModal(){ $('#modalBackdrop').classList.add('open');$('#date').value=selected||key(today);$('#title').focus()}
+function closeModal(){$('#modalBackdrop').classList.remove('open')}
+$('#addTop').onclick=$('#quickAdd').onclick=openModal;$('#cancelModal').onclick=closeModal;
+$('#modalBackdrop').addEventListener('click',e=>{if(e.target===$('#modalBackdrop'))closeModal()});
+$('#deadlineForm').addEventListener('submit',e=>{e.preventDefault();let f=new FormData(e.target);items.push({id:Date.now(),title:f.get('title').trim(),course:f.get('course').trim(),type:f.get('type'),date:f.get('date'),time:f.get('time')||'23:59',remind:Number(f.get('remind')),done:false,notified:false});selected=f.get('date');shown=new Date(localDate(selected).getFullYear(),localDate(selected).getMonth(),1);persist();render();closeModal();e.target.reset();$('#time').value='23:59';toast('Deadline added to your calendar!')});
+$('#prevMonth').onclick=()=>{shown.setMonth(shown.getMonth()-1);renderCalendar()};$('#nextMonth').onclick=()=>{shown.setMonth(shown.getMonth()+1);renderCalendar()};
+$('#goToday').onclick=()=>{shown=new Date(today.getFullYear(),today.getMonth(),1);selected=key(today);view='calendar';render()};
+$('#calendarGrid').addEventListener('click',e=>{let d=e.target.closest('[data-day]');if(d){selected=d.dataset.day;view='calendar';render()}});
+document.body.addEventListener('click',e=>{let b=e.target.closest('[data-check]');if(b){let item=items.find(x=>x.id===Number(b.dataset.check));if(item){item.done=!item.done;persist();render();toast(item.done?'Marked complete — nice work!':'Task reopened')}}});
+document.querySelectorAll('.nav button[data-view]').forEach(b=>b.onclick=()=>{view=b.dataset.view;renderTasks();document.querySelectorAll('.nav button[data-view]').forEach(n=>n.classList.toggle('active',n===b))});
+$('#viewAll').onclick=()=>{view='upcoming';render()};$('#sortToggle').onclick=()=>{sortSoon=!sortSoon;$('#sortToggle').textContent=sortSoon?'Due soonest':'Due latest';render()};
+async function enableNotifications(){if(!('Notification'in window)){toast('This browser does not support notifications.');return}let p=await Notification.requestPermission();if(p==='granted'){toast('Notifications enabled while this planner is open.');checkReminders()}else toast('Notifications are off. You can enable them in browser settings.')}
+$('#notifyBtn').onclick=enableNotifications;$('#enableReminders').onclick=enableNotifications;
+function checkReminders(){if(!('Notification'in window)||Notification.permission!=='granted')return;let now=Date.now();items.forEach(x=>{if(x.done||x.remind<0||x.notified)return;let due=dueDate(x).getTime(),trigger=due-x.remind*60000;if(now>=trigger&&now<=due+3600000){new Notification('DueDay reminder',{body:`${x.title}${x.course?' · '+x.course:''} is due ${x.remind===0?'now':x.remind===60?'in 1 hour':x.remind===30?'in 30 minutes':'in 1 day'}.`});x.notified=true;persist()}})}
+$('#todayLabel').textContent=today.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}).toUpperCase();
+$('#greeting').textContent=(new Date().getHours()<12?'Good morning.':new Date().getHours()<18?'You’ve got this.':'Let’s get organized.');
+render();setInterval(checkReminders,60000);
+</script>
+</body>
+</html>
